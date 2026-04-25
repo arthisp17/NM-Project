@@ -44,15 +44,13 @@ function getPDFFromLocal(id) {
 // ========== BOOK FUNCTIONS ==========
 function loadBooks() {
     const books = localStorage.getItem('elysian_books');
-    if (books) return JSON.parse(books);
-    const sample = [
-        { id: generateId(), title: 'The Midnight Library', author: 'Matt Haig', genre: 'Fiction', year: '2020', description: 'A wonderful novel about second chances.' },
-        { id: generateId(), title: 'Atomic Habits', author: 'James Clear', genre: 'Self-Help', year: '2018', description: 'Tiny changes, remarkable results.' }
-    ];
-    localStorage.setItem('elysian_books', JSON.stringify(sample));
-    return sample;
-}
 
+    if (books) {
+        return JSON.parse(books);
+    }
+
+    return [];
+}
 function saveBooks(books) {
     localStorage.setItem('elysian_books', JSON.stringify(books));
 }
