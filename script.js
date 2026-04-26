@@ -1,3 +1,26 @@
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdE1em19F7O7JuwqTjb2dIPOyCxQLojdU",
+    authDomain: "e-book-management-system-72bd1.firebaseapp.com",
+    projectId: "e-book-management-system-72bd1",
+    storageBucket: "e-book-management-system-72bd1.firebasestorage.app",
+    messagingSenderId: "813206138390",
+    appId: "1:813206138390:web:a2844020081dedfaa8cf37",
+    measurementId: "G-LZS16FLVW2"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 // Generate unique ID
 function generateId() {
     return Date.now() + '-' + Math.random().toString(36).substr(2, 9);
@@ -65,7 +88,7 @@ function saveFavorites(fav) {
 }
 
 // Add book with PDF support
-function addBook(bookData, pdfFile) {
+async function addBook(bookData, pdfFile) {
     const books = loadBooks();
     const newId = generateId();
     
@@ -80,7 +103,7 @@ function addBook(bookData, pdfFile) {
     };
     
     books.push(newBook);
-    saveBooks(books);
+    await addDoc(collection(db, "books"), newBook);
     
     if (pdfFile) {
         const reader = new FileReader();
